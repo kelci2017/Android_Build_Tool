@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:html="http://www.springframework.org/schema/aop">
+<head>
+    <title>Hello WebSocket</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body  onload="connect()">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+
+<!--navbar navbar-expand-md navbar-dark bg-dark-->
+<nav class="navbar navbar-expand-md navbar-dark bd-navbar bg-dark">
+    <a class="navbar-brand" href="#">BuildAndroid</a>
+</nav>
+<div class="container-fluid">
+    <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-4 col-xl-3 bd-sidebar" style="padding:0px">
+            <nav class="bd-links" id="bd-docs-nav" style="padding-left:0px;padding-right:0px">
+                <a class="nav-link">
+                    <ul id="myUL">
+                        <li style="color:dodgerblue;font-size:20px; margin-top: 30px; margin-bottom: 20px; cursor: pointer;" id="local">Build project from local directory</li>
+                        <li style="color:dodgerblue;font-size:20px; margin-top: 30px; margin-bottom: 20px; cursor: pointer;" id="git">Build project from git remote repository</li>
+                    </ul>
+                </a>
+            </nav>
+        </div>
+
+        <main class="col-12 col-md-8 col-xl-9 py-3 bd-content" role="main">
+            <div class="alert alert-info" id="includedContent">
+                <form id="buildForm" role="form" data-toggle="validator" ng-submit="startBuild(parameter)">
+                    <div class="form-group row" id="local_build" style="margin-top: 25px; margin-bottom: 25px">
+                        <label for="versionCode" class="col-sm-2 col-lg-2 col-form-label para_label">Local directory</label>
+                        <div class="col-sm-8 col-lg-5">
+                            <input type="text" class="form-control" id="versionCode" placeholder="Local directory" required>
+                        </div>
+                    </div>
+                    <div id="git_build">
+                    <div class="form-group row" style="margin-top: 25px; margin-bottom: 25px">
+                        <label for="versionName" class="col-sm-2 col-lg-2 col-form-label para_label">Remote repository</label>
+                        <div class="col-sm-8 col-lg-5">
+                            <input type="text" class="form-control" id="versionName" placeholder="Remote repository" required>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-top: 25px; margin-bottom: 25px">
+                        <label for="commit_number" class="col-sm-2 col-lg-2 col-form-label para_label">Commit Number</label>
+                        <div class="col-sm-8 col-lg-5">
+                            <input type="text" class="form-control" id="commit_number" placeholder="Commit Number or Branch Name" required>
+                        </div>
+                    </div>
+                    </div>
+                    <div style="margin-bottom:0px">
+                        <button type="submit" class="btn btn-primary build_button" id="build_button" ng-disabled="isProjectBuilding()" style="margin-left: 250px; width: 150px; margin-top: 20px; margin-bottom: 20px">Build</button>
+                    </div>
+                </form>
+            </div>
+            <pre class="col-12 alert alert-secondary"><code class="language-html" data-lang="html" id="outputElement"></code></pre>
+        </main>
+    </div>
+</div>
+</body>
+</html>
