@@ -19,12 +19,7 @@ import org.apache.commons.io.FileUtils;
  */
 public class CommonUtil {
 	private static final Gson GSON = new Gson();
-	/**
-	 * Parse a string to int
-	 * @param ori
-	 * @param defaultValue
-	 * @return
-	 */
+
 	public static int parseToInt(String ori,int defaultValue){
 		try{
 			return Integer.parseInt(ori);
@@ -32,13 +27,7 @@ public class CommonUtil {
 		
 		return defaultValue;
 	}
-	
-	/**
-	 * Format date to specific format
-	 * @param date
-	 * @param format
-	 * @return
-	 */
+
 	public static final String formatDate(Date date,String format){
         if(date==null||format==null)return null;
 
@@ -48,45 +37,19 @@ public class CommonUtil {
         }catch(Exception e){}
         return null;
     }
-	
-	/**
-	 * Convert an object to JSON
-	 * @param src
-	 * @return
-	 */
+
 	public static String toJson(Object src) {
         return GSON.toJson(src);
     }
-	
-	/**
-	 * Convert JSON to a specific object
-	 * @param json
-	 * @param classOfT
-	 * @return
-	 * @throws JsonSyntaxException
-	 */
+
 	public static <T> T fromJson(String json, Class<T> classOfT) throws JsonSyntaxException {
         return GSON.fromJson(json,classOfT);
     }
-	
-	/**
-	 * Convert JSON to a specific object
-	 * @param json
-	 * @return
-	 * @throws JsonSyntaxException
-	 */
+
     public static <T> T fromJson(String json, Type typeOfT) throws JsonSyntaxException {
         return GSON.fromJson(json,typeOfT);
     }
-    
-    /**
-	 * Convert JSON to a specific object
-	 * <p>No exceptions, returns null if any wrong happens.
-	 * @param json
-	 * @param classOfT
-	 * @return
-	 * @throws JsonSyntaxException
-	 */
+
     public static <T> T fromJsonNoException(String json, Class<T> classOfT) {
         try {
             return fromJson(json, classOfT);
@@ -96,15 +59,7 @@ public class CommonUtil {
             return null;
         }
     }
-    
-    /**
-	 * Convert JSON to a specific object
-	 * <p>No exceptions, returns null if any wrong happens.
-	 * @param json
-	 * @param classOfT
-	 * @return
-	 * @throws JsonSyntaxException
-	 */
+
     public static <T> T fromJsonNoException(String json, Type typeOfT) {
         try {
             return fromJson(json, typeOfT);
@@ -122,37 +77,18 @@ public class CommonUtil {
 	private static String SENSITIVE_WRAPER = "<sensitive>?</sensitive>";
 	private static String SENSITIVE_REGEX = "<sensitive>.*</sensitive>";
 	private static String STARS = "xxxxxx";
-	
-	/**
-	 * Wrap data with sensitive tag.
-	 * <p>
-	 * For example, string "password" will be <sensitive>password</sensitive> after being wrapped.
-	 * @param unSensitive
-	 * @return
-	 */
+
 	public static String wrapSensitiveData(String unSensitive){
 		if(StringUtils.isBlank(unSensitive))return unSensitive;
 		return StringUtils.replace(SENSITIVE_WRAPER, "?", unSensitive);
 	}
-	
-	/**
-	 * Unwrap sensitive data
-	 * <p>
-	 * <sensitive>password</sensitive> will be "password" after being unwrap.
-	 * @param sensitive
-	 * @return
-	 */
+
 	public static String unwrapSensitiveData(String sensitive){
 		if(StringUtils.isEmpty(sensitive))return sensitive;
 		
 		return StringUtils.replaceEach(sensitive, SENSITIVE_ARRAY, BLANK_ARRAY);
 	}
-	
-	/**
-	 * Unwrap an array of sensitive data. See {@link #unwrapSensitiveData(String)}
-	 * @param sensitives
-	 * @return
-	 */
+
 	public static String[] unwrapSensitiveData(String[] sensitives){
 		if(sensitives == null)return sensitives;
 		
@@ -161,26 +97,13 @@ public class CommonUtil {
 		}
 		return sensitives;
 	}
-	
-	/**
-	 * <p>
-	 * Replace sensitive data to six stars character. 
-	 * This is for output of build process to avoid being viewed by others.
-	 * </p>
-	 * @param sensitive
-	 * @return
-	 */
+
 	public static String starsSensitiveData(String sensitive){
         if(StringUtils.isEmpty(sensitive))return sensitive;
 		
 		return StringUtils.replaceAll(sensitive, SENSITIVE_REGEX, STARS);
 	}
-	
-	/**
-	 * Append an array of string to a string.
-	 * @param toBeAppends
-	 * @return
-	 */
+
 	public static String appendString(String... toBeAppends){
 		if(toBeAppends == null)return null;
 		StringBuffer stringBuffer = new StringBuffer();
@@ -191,12 +114,7 @@ public class CommonUtil {
 		
 		return stringBuffer.toString();
 	}
-	
-	/**
-	 * Append an array of string to a file path separated by file system separators.
-	 * @param toBeAppends
-	 * @return
-	 */
+
 	public static String appendFilePath(String... toBeAppends){
 		if(toBeAppends == null)return null;
 		StringBuffer stringBuffer = new StringBuffer();
@@ -210,15 +128,7 @@ public class CommonUtil {
 		
 		return stringBuffer.toString();
 	}
-	
 
-	/**
-	 * List files for given directory and file/dir filters.
-	 * @param dirPath
-	 * @param fileFilter
-	 * @param dirFilter
-	 * @return
-	 */
 	public static Collection<File> listFiles(String dirPath, IOFileFilter fileFilter, IOFileFilter dirFilter){
 		try{
 			return FileUtils.listFiles(new File(dirPath), fileFilter, dirFilter);

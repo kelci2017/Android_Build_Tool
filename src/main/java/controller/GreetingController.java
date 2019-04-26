@@ -24,10 +24,7 @@ public class GreetingController implements GradleOutputListener {
 
     protected void progressOutput(String output ,Object... arguments) {
         if(output == null)return;
-        /**
-         * There should be a better way to replace {} with arguments,
-         * don't have enough time so just leave it for now.
-         */
+
         int argumentIndex = 0;
         while(output.indexOf("{}") != -1){
             Object argument = null;

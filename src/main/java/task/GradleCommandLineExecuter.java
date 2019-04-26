@@ -16,13 +16,7 @@ public class GradleCommandLineExecuter extends BaseExecuter {
 	private final String FAILURE_STRING_MATCH = "BUILD FAILED in ";
 	
 	protected String projectInfo;
-	
-	/**
-	 * Constructor of a gradlew for a given project.
-	 * @param projectInfo
-	 * @param arguments
-	 * @param outputListener
-	 */
+
 	public GradleCommandLineExecuter(String projectInfo
 			,String[] arguments
 			,GradleOutputListener outputListener){
@@ -43,12 +37,7 @@ public class GradleCommandLineExecuter extends BaseExecuter {
         try {
         	List<String> commandList = new ArrayList<String>();
         	if(SystemUtils.IS_OS_WINDOWS){
-        		/**
-        		 * Note that if I added /bin/bash on Linux/Mac, it's not accepting arguments, don't know why
-        		 */
-        		//commandList.add(SystemUtils.IS_OS_WINDOWS?"cmd.exe":"/bin/bash");
         	    commandList.add("cmd.exe");
-        	    //commandList.add(SystemUtils.IS_OS_WINDOWS?"/C":"-c");
         	    commandList.add("/C");
         	}
         	commandList.add(commandPath);
@@ -60,7 +49,6 @@ public class GradleCommandLineExecuter extends BaseExecuter {
             ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 			
 			Map<String, String> env = processBuilder.environment();
-	        //set JAVA_OPTS to empty to dismiss options from servlet container like tomcat
 	        env.put("JAVA_OPTS", "");
 			
 			processBuilder.directory(new File(projectInfo));

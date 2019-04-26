@@ -62,19 +62,12 @@ public class GitPullerTask extends BaseTask {
 			repoPull(gitConfig.getCommit_number());
 		}
 	}
-	
-	/**
-	 * Git puller task doesn't need project validation.
-	 */
+
 	@Override
 	protected boolean needProjectValidation(){
 		return false;
 	}
-	
-	/**
-	 * A project contains .git directory is consider a valid repository.
-	 * @return
-	 */
+
 	private boolean validRepository() {
 		if(controlDirectory() == null) return false;
 		File workingDirectory = new File(gitConfig.getWorking_directory());
@@ -166,11 +159,7 @@ public class GitPullerTask extends BaseTask {
 			}
 		}
 	}
-	
-	/**
-	 * Create SSH session factory.
-	 * @return
-	 */
+
 	private SshSessionFactory createSshSessionFactory(){
 		SshSessionFactory sshSessionFactory = new JschConfigSessionFactory() {
 	        @Override

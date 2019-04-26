@@ -6,32 +6,18 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * <p>Properties loader from server.properties.</p>
- *
- */
 public class PropertiesConfig {
 	private static final Logger logger = LoggerFactory.getLogger(PropertiesConfig.class);
-	
-	//Real path of the webapp locates.
-	public static String REAL_PATH;
-	public static String REST_URL;
-	public static String WEBSOCKET_URL;
-	
-	//The following are Android SDK configurations
+
 	public static String ANDROID_SDK_DIR;
-	
-	//The following are database configurations
+
 	public static String DATABASE_JDBC_CLASSNAME;
 	public static String DATABASE_JDBC_URL;
 	public static String DATABASE_USER_NAME;
 	public static String DATABASE_PASSWORD;
 	public static int DATABASE_MIN_CONNECTION = 5;
 	public static int DATABASE_MAX_CONNECTION = 10;
-	
-	/**
-	 * Load system configurations
-	 */
+
 	public static synchronized void initConfiguration(){
 		Properties properties = new Properties();
         try {

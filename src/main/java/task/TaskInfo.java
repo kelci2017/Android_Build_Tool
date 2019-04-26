@@ -5,12 +5,6 @@ import com.google.gson.JsonElement;
 public class TaskInfo {
     private String task_name;
     private String task_class;
-    /**
-     * <p>This property indicates whether or not block
-     * whole process if it fails. For example,
-     * unit or Ui testing, user want to proceed even testing fails.
-     * default is true.</p>
-     */
     private boolean blockProcess = true;
     private JsonElement arguments;
 

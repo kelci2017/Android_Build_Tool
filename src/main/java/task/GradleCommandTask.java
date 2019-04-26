@@ -22,7 +22,6 @@ public class GradleCommandTask extends BaseTask {
         String gradlePath = CommonUtil.appendFilePath(projectInfo
                 ,"app"
                 ,"build.gradle");
-        //Log.info("the gradle path is: " + gradlePath);
         File fileGradle = new File(gradlePath);
         try{
             FileUtils.write(
@@ -87,7 +86,6 @@ public class GradleCommandTask extends BaseTask {
         File fileAndroidTestReports = new File(reportsAndroidTestPath);
         FileUtils.deleteQuietly(fileAndroidTestReports);
 
-        //Now it is time to build the app.
         try{
             String[] arguments = {"assembleDebug"};
             new GradleCommandLineExecuter(projectInfo,arguments,outputListener).start();
