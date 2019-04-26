@@ -13,13 +13,12 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('/build-android-app');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected********: ' + frame);
-        console.log("aaaaaaaaaaaaaaaaaaa***************");
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/topic/buildlog', function (greeting) {
             console.log('the topic is subscribed');
             showGreeting(JSON.parse(greeting.body).content);
         });
@@ -27,15 +26,13 @@ function connect() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'versionCode': $("#versionCode").val(), 'versionName': $("#versionName").val(), 'commitNo': $("#commit_number").val()}));
+    stompClient.send("/app/build", {}, JSON.stringify({'localDirectory': $("#localDirectory").val(), 'gitUrl': $("#gitUrl").val(), 'commitNo': $("#commit_number").val()}));
     $( "#build_button" ).attr("disabled", true);
 }
 
 function showGreeting(message) {
-    console.log("________________________");
-    // $("#greetings").append("<tr><td>" + message +  "</td></tr>");
     $("#outputElement").append("<p>" + message +  "</p>");
-    if (message.indexOf("Nihao") != -1) {
+    if (message.indexOf("actionable") != -1) {
         $( "#build_button" ).attr("disabled", false);
     }
 }
@@ -49,12 +46,18 @@ $(function () {
 
 function loadLocal() {
     console.log("local local html");
-    $("#local_build").style.visibility = "visible";
-    $("#git_build").style.visibility = "hidden";
+    $("#local_build").css("visibility", "visible")
+    $("#git_build").css("visibility", "hidden")
+    $('#build_button').css('margin-top',-160);
+    $("#local").css("background-color", "#D3D3D3");
+    $("#git").css("background-color", "#F5F5F5");
 }
 
 function loadGit() {
-    $("#local_build").style.visibility = "hidden";
-    $("#git_build").style.visibility = "visible";
+    $("#local_build").css("visibility", "visible")
+    $("#git_build").css("visibility", "visible")
+    $('#build_button').css('margin-top',20);
+    $("#local").css("background-color", "#F5F5F5");
+    $("#git").css("background-color", "#D3D3D3");
 }
 

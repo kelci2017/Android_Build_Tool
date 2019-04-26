@@ -1,57 +1,42 @@
-package helper;
+package task;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import util.CommonUtil;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class CommandLineExecuter extends BaseExecuter {
-	
+public class GradleCommandLineExecuter extends BaseExecuter {
+	private final String FAILURE_STRING = "BUILD FAILED";
 	private final String FAILURE_STRING_MATCH = "BUILD FAILED in ";
 	
-	private String commandPath;
-	private String fail_string_match = FAILURE_STRING_MATCH;
+	protected String projectInfo;
 	
 	/**
-	 * Constructor of a command
-	 * @param commandPath
+	 * Constructor of a gradlew for a given project.
+	 * @param projectInfo
 	 * @param arguments
 	 * @param outputListener
 	 */
-	public CommandLineExecuter(String commandPath
-			, String[] arguments
-			, GradleOutputListener outputListener){
+	public GradleCommandLineExecuter(String projectInfo
+			,String[] arguments
+			,GradleOutputListener outputListener){
 		super(arguments,outputListener);
 		
-		this.commandPath = commandPath;
-	}
-	/**
-	 * Constructor of a command with specific fail message
-	 * @param commandPath
-	 * @param arguments
-	 * @param outputListener
-	 */
-	public CommandLineExecuter(String commandPath
-			, String fail_string_match
-			, String[] arguments
-			, GradleOutputListener outputListener){
-		super(arguments,outputListener);
-		
-		this.fail_string_match = fail_string_match;
-		if(StringUtils.isBlank(fail_string_match)){
-			this.fail_string_match = FAILURE_STRING_MATCH;
-		}
-		this.commandPath = commandPath;
+		this.projectInfo = projectInfo;
 	}
 
 	@Override
 	protected void run() throws Exception {
+        String commandPath = projectInfo + "/gradlew";
+        
 		outputCallback("{}Start running command {} with arguments {}" , System.lineSeparator(),commandPath ,printArray(arguments));
+		
 		InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
@@ -74,6 +59,12 @@ public class CommandLineExecuter extends BaseExecuter {
 			
             ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 			
+			Map<String, String> env = processBuilder.environment();
+	        //set JAVA_OPTS to empty to dismiss options from servlet container like tomcat
+	        env.put("JAVA_OPTS", "");
+			
+			processBuilder.directory(new File(projectInfo));
+			
 			processBuilder.redirectErrorStream(true);
             processBuilder.redirectOutput();
 			
@@ -82,16 +73,19 @@ public class CommandLineExecuter extends BaseExecuter {
             inputStreamReader = new InputStreamReader(inputStream);
             bufferedReader = new BufferedReader(inputStreamReader);
             String line;
+
             boolean anyFailure = false;
             while ((line = bufferedReader.readLine()) != null) {
+//				System.out.println(line);
             	outputCallback(line);
-            	if(line.contains(fail_string_match))anyFailure = true;
+            	if(line.contains(FAILURE_STRING_MATCH))anyFailure = true;
             }
             if(anyFailure){
-            	throw new Exception(line);
+            	//throw new Exception(FAILURE_STRING);
             }
         } catch(Exception e) {
-        	throw e;
+        	e.printStackTrace();
+        	//throw e;
         } finally {
         	try{
         		if(bufferedReader != null)bufferedReader.close();

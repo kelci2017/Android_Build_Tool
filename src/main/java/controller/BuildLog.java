@@ -1,13 +1,13 @@
-package hello;
+package controller;
 
-public class Greeting {
+public class BuildLog {
 
     private String content;
 
-    public Greeting() {
+    public BuildLog() {
     }
 
-    public Greeting(String content) {
+    public BuildLog(String content) {
         this.content = content;
     }
 

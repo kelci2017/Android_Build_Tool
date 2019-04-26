@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:html="http://www.springframework.org/schema/aop">
 <head>
-    <title>Hello WebSocket</title>
+    <title>BuildAndroid</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="/main.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
@@ -24,10 +24,10 @@
     <div class="row flex-xl-nowrap">
         <div class="col-12 col-md-4 col-xl-3 bd-sidebar" style="padding:0px">
             <nav class="bd-links" id="bd-docs-nav" style="padding-left:0px;padding-right:0px">
-                <a class="nav-link">
-                    <ul id="myUL">
-                        <li style="color:dodgerblue;font-size:20px; margin-top: 30px; margin-bottom: 20px; cursor: pointer;" id="local">Build project from local directory</li>
-                        <li style="color:dodgerblue;font-size:20px; margin-top: 30px; margin-bottom: 20px; cursor: pointer;" id="git">Build project from git remote repository</li>
+                <a class="nav-link" style="padding-left: 0; padding-top: 0">
+                    <ul id="myUL" style="list-style-type: none; padding-left: 0px">
+                        <li style="color:dodgerblue;font-size:20px; padding-left: 10px; padding-top: 20px; padding-bottom: 20px; cursor: pointer; background-color: #D3D3D3" id="git">Build project from git remote repository</li>
+                        <li style="color:dodgerblue;font-size:20px; padding-left: 10px; padding-top: 20px; padding-bottom: 20px; cursor: pointer;" id="local">Build project from local directory</li>
                     </ul>
                 </a>
             </nav>
@@ -37,16 +37,16 @@
             <div class="alert alert-info" id="includedContent">
                 <form id="buildForm" role="form" data-toggle="validator" ng-submit="startBuild(parameter)">
                     <div class="form-group row" id="local_build" style="margin-top: 25px; margin-bottom: 25px">
-                        <label for="versionCode" class="col-sm-2 col-lg-2 col-form-label para_label">Local directory</label>
+                        <label for="localDirectory" class="col-sm-2 col-lg-2 col-form-label para_label">Local directory</label>
                         <div class="col-sm-8 col-lg-5">
-                            <input type="text" class="form-control" id="versionCode" placeholder="Local directory" required>
+                            <input type="text" class="form-control" id="localDirectory" placeholder="Local directory" required>
                         </div>
                     </div>
                     <div id="git_build">
                     <div class="form-group row" style="margin-top: 25px; margin-bottom: 25px">
-                        <label for="versionName" class="col-sm-2 col-lg-2 col-form-label para_label">Remote repository</label>
+                        <label for="gitUrl" class="col-sm-2 col-lg-2 col-form-label para_label">Remote repository</label>
                         <div class="col-sm-8 col-lg-5">
-                            <input type="text" class="form-control" id="versionName" placeholder="Remote repository" required>
+                            <input type="text" class="form-control" id="gitUrl" placeholder="Remote repository" required>
                         </div>
                     </div>
                     <div class="form-group row" style="margin-top: 25px; margin-bottom: 25px">
